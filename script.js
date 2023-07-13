@@ -1,6 +1,6 @@
 function searchRecipes(searchTerm) {
     const appId = '3d90a8ed'; // ID for Edamam API
-    const appKey = '8f7344a214663e76c93da727131ce2ac'; // App key for Edamam API
+    const appKey = '8f7344a214663e76c93da727131ce2ac'; // App key for Edamam APIaut
   
     const searchApiUrl = `https://api.edamam.com/search?q=${searchTerm}&app_id=${appId}&app_key=${appKey}`;
     const nutritionApiUrl = `https://api.edamam.com/api/nutrition-data?app_id=${appId}&app_key=${appKey}`;
@@ -39,6 +39,9 @@ function searchRecipes(searchTerm) {
   
   function displayRecipes(recipes) {
     // Code to display the recipe data on the page
+    const apiDataElement = document.getElementById('api-recipe-data');
+    apiDataElement.textContent = recipes;
+    console.log(recipes)
     
   }
   function displayNutritionData(nutritionData) {
