@@ -54,6 +54,31 @@ function searchRecipes(searchTerm) {
   const searchInput = document.getElementById('search-input');
   let timeoutId;
   
+  localStorage.setItem("searchHistory");
+
+  function openPage() {
+    var x = document.getElementById("search").value;
+
+    if (x === "Recipe") {
+        window.open("/index.html");
+    }
+
+    if (x === "Recipe") {
+        window.open("/customizedalert.html");
+    }
+
+}
+
+function searchHistory()
+    var recentSearch = []
+    recentSearch.push($('#search').val());
+
+    $.each(recentSearch, function(index, value)
+        const p = document.createElement("p");
+        p.innerHTML = value;
+        document.getElementById("historyLine").appendChild(p);
+
+
   searchInput.addEventListener('input', (event) => {
     clearTimeout(timeoutId);
   
