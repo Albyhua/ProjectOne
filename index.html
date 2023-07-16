@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/reset.css">
     <!-- foundation framework css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/style.css">
@@ -15,21 +16,36 @@
     <header class="container">
         <h1>title </h1>
     </header>
-    <nav>
-        <form>
-            <input placeholder="enter a recipe">
-            <button> Search</button>
-            <!-- have autocomplete option available to user -->
-        </form>
-    </nav>
-    <section>
-        
-        <div class="foodEx"></div>
-        <div class="foodimg"></div>
-    </section>
-    <section class="history"></section>
-</body>
 
+    <main>
+        <div id="food-track" data-mouse-down-at="0" data-prev-precentage="0">
+            <img class="image" src="./assets/images/biryani.jpeg" alt="yummy chicken biryani" draggable="false">
+            <img class="image" src="./assets/images/felafel.jpg" alt="beautiful plating of felafel on a white plate of flowers" draggable="false">
+            <img class="image" src="./assets/images/lambchops.jpg" alt="plating of lambchop on top of roasted vegetables and herbs" draggable="false">
+            <img class="image" src="./assets/images/oats.jpeg" alt="healthy and earthy plating of oats top with berries" draggable="false">
+            <img class="image" src="./assets/images/pancakes.jpg" alt="fluffly pancakes with each layer having berries and slices oranges" draggable="false">
+            <img class="image" src="./assets/images/pasta.jpg" alt="pesto pasta with a fork twirling a forkful of spaghetti" draggable="false">
+            <img class="image" src="./assets/images/salmon.jpeg" alt="japanese seared salmon with a side of vermicelli topped with cilantro" draggable="false">
+            <img class="image" src="./assets/images/toast.jpg" alt="Thick slice of sourdough topped with avocado, arugula, and bocconcini with adash of pepper" draggable="false">
+            <img class="image" src="./assets/images/pad-thai.jpeg" alt="red plate with black rim of pad thai with chops surronding all" draggable="false">
+        </div>
+        <nav>
+            <form>
+                <input placeholder="enter a recipe">
+                <button> Search</button>
+                <!-- have autocomplete option available to user -->
+            </form>
+        </nav>
+        <section>
+
+            <div class="foodEx"></div>
+            <div class="foodimg"></div>
+        </section>
+        <section class="history"></section>
+    </main>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="./assets/script.js"></script>
 
 </html>
