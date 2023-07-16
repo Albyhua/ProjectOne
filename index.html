@@ -11,26 +11,34 @@
 
 </head>
 
-<body >
+<body>
     <div class="p has-background-warning-dark form pb-2">
-    <div class="container.is-max-desktop is-size-3 has-text-light has-text-centered">
-        <div>RECIPE FINDER </div>
+        <div class="container is-size-3 has-text-light has-text-centered">
+            <div>RECIPE FINDER </div>
+        </div>
+        <nav>
+            <form>
+                <input placeholder="enter a recipe">
+                <button> Search</button>
+                <!-- have autocomplete option available to user -->
+            </form>
+        </nav>
     </div>
-    <nav >
-        <form >
-            <input placeholder="enter a recipe">
-            <button> Search</button>
-            <!-- have autocomplete option available to user -->
-        </form>
-    </nav>
-</div>
-    <section>
-        <div class="foodEx"></div>
-        <div class="foodimg"></div>
-    </section>
-    <section class="history"></section>
+    <!-- homepage with search results and most recent searches -->
+    <div class="results container columns m-4">
+        <section class=" column is-8  box has-background-warning-dark">
+            Try Something New
+            <div class="search block "></div>
+        </section>
+        <section class=" history column is-3 is-offset-1 box has-background-warning-dark">
+            Recent Searches
+            <div class="historyBlock " ></div>
+        </section>
+    </div>
 </body>
 
 <script src="./assets/script.js"></script>
 
-</html>
+</html>  
+          <!-- <div class="foodEx"></div>
+            <div class="foodimg"></div> -->
