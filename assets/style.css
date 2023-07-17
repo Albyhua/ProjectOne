@@ -25,3 +25,7 @@ height: 100vh;
 .recipe{
     height: 90%;
 }
+.mainImage{
+    max-width: auto;
+    max-height: 20vh;
+}
