@@ -12,11 +12,31 @@
 </head>
 
 <body>
-    <header class="container">
-        <h1>title </h1>
-    </header>
+    <div class="p has-background-warning-dark form pb-2">
+        <div class="container is-size-3 has-text-light has-text-centered">
+            <div>RECIPE FINDER </div>
+        </div>
+        <nav>
+            <form>
+                <input placeholder="enter a recipe">
+                <button> Search</button>
+                <!-- have autocomplete option available to user -->
+            </form>
+        </nav>
+    </div>
+    <!-- homepage with search results and most recent searches -->
+    <div class="results container columns m-4">
+        <section class=" column is-8  box has-background-warning-dark">
+            Try Something New
+            <div class="search block "></div>
+        </section>
+        <section class=" history column is-3 is-offset-1 box has-background-warning-dark">
+            Recent Searches
+            <div class="historyBlock " ></div>
+        </section>
+    </div>
 
-    <main>
+    <!--
         <div id="food-track" data-mouse-down-at="0" data-prev-precentage="0">
             <img class="image" src="./assets/images/biryani.jpeg" alt="yummy chicken biryani" draggable="false">
             <img class="image" src="./assets/images/felafel.jpg" alt="beautiful plating of felafel on a white plate of flowers" draggable="false">
@@ -27,21 +47,7 @@
             <img class="image" src="./assets/images/salmon.jpeg" alt="japanese seared salmon with a side of vermicelli topped with cilantro" draggable="false">
             <img class="image" src="./assets/images/toast.jpg" alt="Thick slice of sourdough topped with avocado, arugula, and bocconcini with adash of pepper" draggable="false">
             <img class="image" src="./assets/images/pad-thai.jpeg" alt="red plate with black rim of pad thai with chops surronding all" draggable="false">
-        </div>
-        <nav>
-            <form>
-                <input placeholder="enter a recipe">
-                <button> Search</button>
-                <!-- have autocomplete option available to user -->
-            </form>
-        </nav>
-        <section>
-
-            <div class="foodEx"></div>
-            <div class="foodimg"></div>
-        </section>
-        <section class="history"></section>
-    </main>
+         </div>  -->
 
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
