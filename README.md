@@ -1,4 +1,5 @@
 # ProjectOne
+
 GIVIN a recipie search website
 WHEN I open the website
 THEN I am greeted with a title, a search bar, my search history, and a bunch of random(?) recipies
