@@ -1,7 +1,7 @@
 body{
     background-color: #ca9b4c;
 background-image: linear-gradient(180deg, #ca9b4c 0%, #a55a00 50%, #530800 100%);
-height: 100vh;
+height: 200vh;
 }
 
 .results{
@@ -23,9 +23,58 @@ height: 100vh;
         display: block;
 } */
 .recipe{
-    height: 90%;
+    height: 87%;
 }
 .mainImage{
     max-width: auto;
-    max-height: 20vh;
+    max-height: 35%;
+    /* margin-left: 40vh;
+    margin-right: 40vh; */
+}
+.break{
+    flex-basis:100%;
+    height: 0px;
+}
+.ingredents{
+    width: 100%;
+    height: 29%;
+
+}
+.steps{
+    width:100%;
+    height: 29%;
+
+}
+.nutrition{
+    width: 75%;
+    margin-left:5vh;
+}
+
+@media screen and (max-width: 1324px) {
+    .break2{
+        flex-basis:100%;
+        height: 0px;
+    }
+    .ingredents{
+        width: 100%;
+        height: 20%;
+    
+    }
+    .steps{
+        width:100%;
+        height: 20%;
+    
+    }
+    .nutrition{
+        width: 100%;
+        height: 20%;
+        margin-left:0;
+    }
+    body{
+        height: 200vh;
+    }
+    /* .tileMe li{
+    display: inline;
+    float: left;
+    } */
 }
