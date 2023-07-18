@@ -4,6 +4,7 @@ const recipeListElement = document.getElementById('recipe-list');
 const recipeDetailsElement = document.getElementById('recipe-details');
 const autocompleteListElement = document.getElementById('autocomplete-list');
 const historyBlock = document.getElementById('history-block');
+const apiKey = 'a0d37f1dc6853215adb58e3a7e45f9d5';
 
 let searchHistory = [];
 
@@ -16,6 +17,7 @@ function handleFormSubmit(event) {
     const searchTerm = searchInput.value.trim();
     if (searchTerm.length > 0) {
         searchRecipes(searchTerm);
+        saveSearchToHistory(searchTerm);
     }
 }
 
@@ -29,25 +31,19 @@ function handleInputChange() {
 }
 
 function searchRecipes(searchTerm) {
-    fetch(`https://api.edamam.com/api/recipes/v2`, {
+    fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${searchTerm}&app_id=3d90a8ed&app_key=${a0d37f1dc6853215adb58e3a7e45f9d5}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'app_id': '3d90a8ed', 
-            'app_key': 'a0d37f1dc6853215adb58e3a7e45f9d5' 
         },
-        params: {
-            q: searchTerm
-        }
     })
-    .then(response => response.json())
-    .then(data => {
-        displayRecipes(data.hits);
-        saveSearchToHistory(searchTerm);
-    })
-    .catch(error => {
-        console.log('An error occurred:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            displayRecipes(data.hits);
+        })
+        .catch(error => {
+            console.log('An error occurred:', error);
+        });
 }
 
 function displayRecipes(recipes) {
@@ -111,7 +107,19 @@ function autocompleteSearch(searchTerm) {
     clearAutocompleteList();
 
     // Make an API call to fetch autocomplete suggestions
-   
+    fetch(`https://api.example.com/autocomplete?q=${searchTerm}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            displayAutocompleteSuggestions(data.suggestions);
+        })
+        .catch(error => {
+            console.log('An error occurred:', error);
+        });
 }
 
 function displayAutocompleteSuggestions(suggestions) {
