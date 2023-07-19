@@ -1,108 +1,173 @@
+const searchInput = document.getElementById('search-input');
+const searchForm = document.getElementById('search-form');
+const recipeListElement = document.getElementById('recipe-list');
+const recipeDetailsElement = document.getElementById('recipe-details');
+const autocompleteListElement = document.getElementById('autocomplete-list');
+const historyBlock = document.getElementById('history-block');
+const apiKey = 'a0d37f1dc6853215adb58e3a7e45f9d5'; 
+const appId = '3d90a8ed'; 
+
+const autocompleteSuggestions = [
+  'Chicken',
+  'Salad',
+  'Smoothie',
+  'Burger',
+  'Ice Cream',
+  'Pineapple',
+  'Strawberry',
+];
+
+let searchHistory = [];
+
+searchForm.addEventListener('submit', handleFormSubmit);
+// searchInput.addEventListener('input', handleInputChange);
+
+function handleFormSubmit(event) {
+  event.preventDefault();
+
+  const searchTerm = searchInput.value.trim();
+  console.log(searchTerm)
+  if (searchTerm.length > 0) {
+    searchRecipes(searchTerm);
+    saveSearchToHistory(searchTerm);
+  }
+}
+
+function handleInputChange() {
+  const searchTerm = searchInput.value.trim();
+  if (searchTerm.length > 0) {
+    autocompleteSearch(searchTerm);
+  } else {
+    clearAutocompleteList();
+  }
+}
+
 function searchRecipes(searchTerm) {
-    const appId = '3d90a8ed'; // ID for Edamam API
-    const appKey = '8f7344a214663e76c93da727131ce2ac'; // App key for Edamam API
-
-    const searchApiUrl = `https://api.edamam.com/search?q=${searchTerm}&app_id=${appId}&app_key=${appKey}`;
-    const nutritionApiUrl = `https://api.edamam.com/api/nutrition-data?app_id=${appId}&app_key=${appKey}`;
-    const autocompleteApiUrl = `https://api.edamam.com/auto-complete?q=${searchTerm}&app_id=${appId}&app_key=${appKey}`;
-
-    // This performs the recipe search request
-    const searchRequest = fetch(searchApiUrl).then((response) => response.json());
-
-    // This performs the nutrition analysis request
-    const nutritionRequest = fetch(nutritionApiUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            ingr: [searchTerm],
-        }),
-    }).then((response) => response.json());
-
-    // This performs the autocomplete request
-    const autocompleteRequest = fetch(autocompleteApiUrl).then((response) => response.json());
-
-    Promise.all([searchRequest, nutritionRequest, autocompleteRequest])
-        .then((data) => {
-            const recipes = data[0].hits;
-            const nutritionData = data[1];
-            const autocompleteSuggestions = data[2];
-            displayRecipes(recipes);
-            displayNutritionData(nutritionData);
-            displayAutocompleteSuggestions(autocompleteSuggestions);
-        })
-        .catch((error) => {
-            console.log('An error occurred:', error);
-        });
+  var URL = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchTerm}&app_id=3d90a8ed&app_key=${apiKey}`
+  console.log(URL)
+  fetch(URL, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+  })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+          displayRecipes(data.hits);
+          saveSearchToHistory(searchTerm);
+      })
+      .catch(error => {
+          console.log('An error occurred:', error);
+      });
 }
 
 function displayRecipes(recipes) {
-    // Code to display the recipe data on the page
+  // Clear previous search results
+  recipeListElement.innerHTML = '';
 
+  // Iterate through the recipes and create a recipe element for each
+  recipes.forEach(recipe => {
+    const recipeElement = document.createElement('li');
+    recipeElement.classList.add('recipe');
+    recipeElement.textContent = recipe.recipe.label;
+
+    // Add a click event listener to show recipe details when clicked
+    recipeElement.addEventListener('click', () => {
+      showRecipeDetails(recipe.recipe);
+    });
+
+    // Append the recipe element to the recipe list
+    recipeListElement.appendChild(recipeElement);
+  });
 }
-function displayNutritionData(nutritionData) {
-    // Code to display the nutrition data on the page
 
+function showRecipeDetails(recipe) {
+  // Clear previous recipe details
+  //recipeDetailsElement.innerHTML = '';
+  console.log(recipe)
+  // Create elements for the recipe details
+  const recipeTitle = document.createElement('h2');
+  recipeTitle.textContent = recipe.label;
+
+  const imgEl = document.createElement("img")
+  // imgEl.setAttribute("src",recipe.images.REGULAR.url)
+  imgEl.setAttribute("src",recipe.image)
+
+  const ingredientsTitle = document.createElement('h3');
+  ingredientsTitle.textContent = 'Ingredients';
+
+  const ingredientsList = document.createElement('ul');
+  recipe.ingredientLines.forEach(ingredient => {
+    const ingredientItem = document.createElement('li');
+    ingredientItem.textContent = ingredient;
+    ingredientsList.appendChild(ingredientItem);
+  });
+
+  const stepsTitle = document.createElement('h3');
+  stepsTitle.textContent = 'Steps';
+
+  const stepsList = document.createElement('ol');
+  recipe.ingredients.forEach((ing, index) => {
+    const stepItem = document.createElement('li');
+    stepItem.textContent = `ingredients ${index + 1}: ${ing.text} - ${ing.quantity}`;
+    stepsList.appendChild(stepItem);
+  });
+  console.log(recipeDetailsElement)
+  // Append the elements to the recipe details
+  recipeDetailsElement.innerHTML = ""
+  recipeDetailsElement.appendChild(recipeTitle);
+  recipeDetailsElement.appendChild(imgEl)
+  recipeDetailsElement.appendChild(ingredientsTitle);
+  recipeDetailsElement.appendChild(stepsList);
+  // recipeDetailsElement.appendChild(stepsTitle);
+  // recipeDetailsElement.appendChild(ingredientsList);
+}
+
+function autocompleteSearch(searchTerm) {
+  // Clear previous autocomplete suggestions
+  clearAutocompleteList();
+
+  // Filter the suggestions based on the search term
+  const filteredSuggestions = autocompleteSuggestions.filter(suggestion =>
+    suggestion.toLowerCase().startsWith(searchTerm.toLowerCase())
+  );
+
+  displayAutocompleteSuggestions(filteredSuggestions);
 }
 
 function displayAutocompleteSuggestions(suggestions) {
-    // Code to display the autocomplete 
+  // Create elements for the autocomplete suggestions
+  suggestions.forEach(suggestion => {
+    const suggestionItem = document.createElement('div');
+    suggestionItem.classList.add('autocomplete-item');
+    suggestionItem.textContent = suggestion;
 
+    // Add a click event listener to set the suggestion as the search input value
+    suggestionItem.addEventListener('click', () => {
+      searchInput.value = suggestion;
+      handleFormSubmit(event); // Perform search when suggestion is clicked
+      clearAutocompleteList(); // Clear the autocomplete list after search
+    });
+
+    // Append the suggestion element to the autocomplete list
+    autocompleteListElement.appendChild(suggestionItem);
+  });
 }
 
-const searchInput = document.getElementById('search-input');
-let timeoutId;
-
-searchInput.addEventListener('input', (event) => {
-    clearTimeout(timeoutId);
-
-    const searchTerm = event.target.value.trim();
-    if (searchTerm.length > 1) {
-        timeoutId = setTimeout(() => {
-            searchRecipes(searchTerm);
-        }, 500);
-    }
-});
-
-
-
-
-const track = document.getElementById("food-track");
-
-window.onmousedown = e => {
-    track.dataset.mouseDownAt = e.clientX;
+function clearAutocompleteList() {
+  autocompleteListElement.innerHTML = '';
 }
 
-window.onmouseup = () => {
-    track.dataset.mouseDownAt = "0";
-    track.dataset.prevPercentage = track.dataset.percentage;
+function saveSearchToHistory(searchTerm) {
+  searchHistory.push(searchTerm);
+  // Update the historyBlock element with the search history
+  historyBlock.innerHTML = '';
+  searchHistory.forEach(search => {
+    const searchItem = document.createElement('div');
+    searchItem.classList.add('searchItem');
+    searchItem.textContent = search;
+    historyBlock.appendChild(searchItem);
+  });
 }
 
-window.onmousemove = e => {
-    const mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX,
-        maxDelta = window.innerWidth / 2;
-
-    const percentage = (mouseDelta / maxDelta) * -100,
-        nextPercentage = parseFloat(track.dataset.prevPercentage) + percentage
-
-    Math.min(nextPercentage, 0);
-    Math.max(nextPercentage, -100);
-
-    track.dataset.percentage = nextPercentage;
-
-    track.style.transform = `translate(${percentage}%, -50%)`;
-
-    for (const image of track.getElementsByClassName("image")) {
-        image.style.objectPosition = `${nextPercentage + 100}% 50%`
-    }
-
-    track.animate({
-        transform: `translate(${nextPercentage}%, -50%)`
-    }, { duration: 1200, fill: "forwards" });
-
-
-    image.animate({
-        objectPosition: `${100 + nextPercentage}% center`
-    }, { duration: 1200, fill: "forwards" });
-}
