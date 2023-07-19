@@ -1,3 +1,4 @@
+console.log("hello")
 function searchRecipes(searchTerm) {
     const appId = '3d90a8ed'; // ID for Edamam API
     const appKey = '8f7344a214663e76c93da727131ce2ac'; // App key for Edamam API
@@ -8,7 +9,7 @@ function searchRecipes(searchTerm) {
 
     // This performs the recipe search request
     const searchRequest = fetch(searchApiUrl).then((response) => response.json());
-
+// check to make sure that you are using the API calls correctly(line 11,14)
     // This performs the nutrition analysis request
     const nutritionRequest = fetch(nutritionApiUrl, {
         method: 'POST',
@@ -18,6 +19,7 @@ function searchRecipes(searchTerm) {
         body: JSON.stringify({
             ingr: [searchTerm],
         }),
+        // check the API documentation for correct method for Edamam. READ it
     }).then((response) => response.json());
 
     // This performs the autocomplete request
@@ -53,11 +55,12 @@ function displayAutocompleteSuggestions(suggestions) {
 
 const searchInput = document.getElementById('search-input');
 let timeoutId;
-
-searchInput.addEventListener('input', (event) => {
+const searchValue = document.getElementById('search-value')
+// What is this Timeout for?
+searchInput.addEventListener('click', function() {
     clearTimeout(timeoutId);
-
-    const searchTerm = event.target.value.trim();
+console.log ("hello")
+    const searchTerm = searchInput.value.trim();
     if (searchTerm.length > 1) {
         timeoutId = setTimeout(() => {
             searchRecipes(searchTerm);
@@ -70,39 +73,39 @@ searchInput.addEventListener('input', (event) => {
 
 const track = document.getElementById("food-track");
 
-window.onmousedown = e => {
-    track.dataset.mouseDownAt = e.clientX;
-}
+// window.onmousedown = e => {
+//     track.dataset.mouseDownAt = e.clientX;
+// }
 
-window.onmouseup = () => {
-    track.dataset.mouseDownAt = "0";
-    track.dataset.prevPercentage = track.dataset.percentage;
-}
+// window.onmouseup = () => {
+//     track.dataset.mouseDownAt = "0";
+//     track.dataset.prevPercentage = track.dataset.percentage;
+// }
 
-window.onmousemove = e => {
-    const mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX,
-        maxDelta = window.innerWidth / 2;
+// window.onmousemove = e => {
+//     const mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX,
+//         maxDelta = window.innerWidth / 2;
 
-    const percentage = (mouseDelta / maxDelta) * -100,
-        nextPercentage = parseFloat(track.dataset.prevPercentage) + percentage
+//     const percentage = (mouseDelta / maxDelta) * -100,
+//         nextPercentage = parseFloat(track.dataset.prevPercentage) + percentage
 
-    Math.min(nextPercentage, 0);
-    Math.max(nextPercentage, -100);
+//     Math.min(nextPercentage, 0);
+//     Math.max(nextPercentage, -100);
 
-    track.dataset.percentage = nextPercentage;
+//     track.dataset.percentage = nextPercentage;
 
-    track.style.transform = `translate(${percentage}%, -50%)`;
+//     track.style.transform = `translate(${percentage}%, -50%)`;
 
-    for (const image of track.getElementsByClassName("image")) {
-        image.style.objectPosition = `${nextPercentage + 100}% 50%`
-    }
+//     for (const image of track.getElementsByClassName("image")) {
+//         image.style.objectPosition = `${nextPercentage + 100}% 50%`
+//     }
 
-    track.animate({
-        transform: `translate(${nextPercentage}%, -50%)`
-    }, { duration: 1200, fill: "forwards" });
+//     track.animate({
+//         transform: `translate(${nextPercentage}%, -50%)`
+//     }, { duration: 1200, fill: "forwards" });
 
 
-    image.animate({
-        objectPosition: `${100 + nextPercentage}% center`
-    }, { duration: 1200, fill: "forwards" });
-}
+//     image.animate({
+//         objectPosition: `${100 + nextPercentage}% center`
+//     }, { duration: 1200, fill: "forwards" });
+// }
