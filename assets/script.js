@@ -12,7 +12,7 @@ const recipePage = document.getElementById('recipe');
 const backBtn = document.getElementById('backBtn')
 const apiKey = 'a0d37f1dc6853215adb58e3a7e45f9d5'; 
 const appId = '3d90a8ed'; 
-
+const historyBox = document.getElementsByClassName('historyBlock');
 const autocompleteSuggestions = [
   'Chicken',
   'Salad',
@@ -28,16 +28,16 @@ let searchHistory = [];
 searchForm.addEventListener('submit', handleFormSubmit);
 // searchInput.addEventListener('input', handleInputChange);
 
-function handleFormSubmit(event) {
-  event.preventDefault();
+// function handleFormSubmit(event) {
+//   event.preventDefault();
 
-  const searchTerm = searchInput.value.trim();
-  console.log(searchTerm)
-  if (searchTerm.length > 0) {
-    searchRecipes(searchTerm);
-    saveSearchToHistory(searchTerm);
-  }
-}
+//   const searchTerm = searchInput.value.trim();
+//   console.log(searchTerm)
+//   if (searchTerm.length > 0) {
+//     searchRecipes(searchTerm);
+//     saveSearchToHistory(searchTerm);
+//   }
+// }
 
 function handleInputChange() {
   const searchTerm = searchInput.value.trim();
@@ -48,23 +48,37 @@ function handleInputChange() {
   }
 }
 
+function handleFormSubmit(event) {
+  event.preventDefault();
+  const searchTerm = searchInput.value.trim();
+  console.log(searchTerm);
+  if (searchTerm.length > 0) {
+    searchRecipes(searchTerm);
+  }
+}
+
 function searchRecipes(searchTerm) {
-  var URL = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchTerm}&app_id=3d90a8ed&app_key=${apiKey}`
-  console.log(URL)
+  var URL = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchTerm}&app_id=3d90a8ed&app_key=${apiKey}`;
+  console.log(URL);
   fetch(URL, {
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json',
-      },
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+    },
   })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-          displayRecipes(data.hits);
-      })
-      .catch(error => {
-          console.log('An error occurred:', error);
-      });
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    if (data.hits.length > 0) {
+      displayRecipes(data.hits);
+      saveSearchToHistory(searchTerm);
+    } else {
+      searchInput.value = '';
+    }
+  })
+  .catch(error => {
+    console.log('An error occurred:', error);
+  });
 }
 
 function displayRecipes(recipes) {
@@ -130,14 +144,6 @@ function showRecipeDetails(recipe) {
     stepsList.appendChild(stepItem);
   });
   console.log(recipeDetailsElement)
-  // Append the elements to the recipe details
-  // recipeDetailsElement.innerHTML = ""
-  // recipeDetailsElement.appendChild(recipeTitle);
-  // recipeDetailsElement.appendChild(imgEl)
-  // recipeDetailsElement.appendChild(ingredientsTitle);
-  // recipeDetailsElement.appendChild(stepsList);
-  // recipeDetailsElement.appendChild(stepsTitle);
-  // recipeDetailsElement.appendChild(ingredientsList);
   showNutritionDetails(recipe);
 }
 
@@ -199,8 +205,8 @@ function saveSearchToHistory(searchTerm) {
 
   historyBlock.innerHTML = '';
   searchHistory.forEach(search => {
-    const searchItem = document.createElement('li');
-    searchItem.classList.add('searchItem');
+    const searchItem = document.createElement('div');
+    searchItem.classList.add('historyBlock','boxes', 'box');
     searchItem.textContent = search;
     historyBlock.appendChild(searchItem);
   });
@@ -220,4 +226,33 @@ backBtn.addEventListener('click',function(event){
   recipePage.classList.add('is-hidden');
   mainPage.classList.remove('is-hidden');
   backBtn.classList.add('is-hidden');
+})
+
+function clickHistory(searchTerm){
+  var URL = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchTerm}&app_id=3d90a8ed&app_key=${apiKey}`;
+  console.log(URL);
+  fetch(URL, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    if (data.hits.length > 0) {
+      displayRecipes(data.hits);
+    } else {
+      searchInput.value = '';
+    }
+  })
+  .catch(error => {
+    console.log('An error occurred:', error);
+  });
+}
+
+$(document).on("click", '.historyBlock', function () {
+  var food = $(event.target).text()
+  console.log(food)
+  clickHistory(food);
 })
