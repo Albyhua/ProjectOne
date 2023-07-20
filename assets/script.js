@@ -1,7 +1,3 @@
-
-
-
-
 const searchInput = document.getElementById('search-input');
 const searchForm = document.getElementById('search-form');
 const recipeListElement = document.getElementById('recipe-list');
@@ -65,7 +61,6 @@ function searchRecipes(searchTerm) {
       .then(data => {
         console.log(data)
           displayRecipes(data.hits);
-          saveSearchToHistory(searchTerm);
       })
       .catch(error => {
           console.log('An error occurred:', error);
@@ -81,7 +76,8 @@ function displayRecipes(recipes) {
     const recipeElement = document.createElement('div');
     const nameElement = document.createElement("h3");
     const imgElement = document.createElement("img");
-
+    imgElement.width = 175;
+    imgElement.height = 175;
     
     imgElement.setAttribute("src", recipe.recipe.image);
     imgElement.setAttribute("alt", "food image");
@@ -199,9 +195,11 @@ function clearAutocompleteList() {
 function saveSearchToHistory(searchTerm) {
   searchHistory.push(searchTerm);
   // Update the historyBlock element with the search history
+  localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+
   historyBlock.innerHTML = '';
   searchHistory.forEach(search => {
-    const searchItem = document.createElement('div');
+    const searchItem = document.createElement('li');
     searchItem.classList.add('searchItem');
     searchItem.textContent = search;
     historyBlock.appendChild(searchItem);
@@ -223,6 +221,3 @@ backBtn.addEventListener('click',function(event){
   mainPage.classList.remove('is-hidden');
   backBtn.classList.add('is-hidden');
 })
-
-
-
