@@ -199,14 +199,17 @@ function clearAutocompleteList() {
 }
 
 function saveSearchToHistory(searchTerm) {
+  // Add the searchTerm to the searchHistory array
   searchHistory.push(searchTerm);
-  // Update the historyBlock element with the search history
+
+  // Save the updated searchHistory array to Local Storage
   localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
 
+  // Update the historyBlock element with the search history
   historyBlock.innerHTML = '';
   searchHistory.forEach(search => {
     const searchItem = document.createElement('div');
-    searchItem.classList.add('historyBlock','boxes', 'box');
+    searchItem.classList.add('historyBlock', 'boxes', 'box');
     searchItem.textContent = search;
     historyBlock.appendChild(searchItem);
   });
@@ -256,3 +259,23 @@ $(document).on("click", '.historyBlock', function () {
   console.log(food)
   clickHistory(food);
 })
+
+function initializeSearchHistory() {
+  var searchHistoryString = localStorage.getItem('searchHistory');
+
+  if (searchHistoryString) {
+    // Convert the search history string from Local Storage back to an array
+    searchHistory = JSON.parse(searchHistoryString);
+
+    // Update the historyBlock element with the search history
+    historyBlock.innerHTML = '';
+    searchHistory.forEach(search => {
+      const searchItem = document.createElement('div');
+      searchItem.classList.add('historyBlock', 'boxes', 'box');
+      searchItem.textContent = search;
+      historyBlock.appendChild(searchItem);
+    });
+  }
+}
+
+initializeSearchHistory();
