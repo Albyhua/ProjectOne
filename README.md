@@ -2,7 +2,7 @@
 
 GIVIN a recipe search website
 WHEN I open the website
-THEN I am greeted with a title, a search bar, my search history, and a bunch of random(?) recipes
+THEN I am greeted with a title, a search bar, my search history, and a bunch of random(?) recipies
 WHEN I click on a recipe
 THEN I am brought to a more detailed description of that recipe including ingredents and steps for preperation
 WHEN I type in the search bar
