@@ -70,9 +70,17 @@ function displayRecipes(recipes) {
 
   // Iterate through the recipes and create a recipe element for each
   recipes.forEach(recipe => {
-    const recipeElement = document.createElement('li');
-    recipeElement.classList.add('recipe');
-    recipeElement.textContent = recipe.recipe.label;
+    const recipeElement = document.createElement('div');
+    const nameElement = document.createElement("h3")
+    const imgElement = document.createElement("img")
+
+    
+    imgElement.setAttribute("src", recipe.recipe.image);
+    imgElement.setAttribute("alt", "food image");
+    imgElement.classList.add('image')
+    console.log(recipe)
+    recipeElement.classList.add('recipe','searchBlock','boxes','box','is-justify-content-space-around','m-2');
+    nameElement.textContent = recipe.recipe.label;
 
     // Add a click event listener to show recipe details when clicked
     recipeElement.addEventListener('click', () => {
@@ -80,6 +88,8 @@ function displayRecipes(recipes) {
     });
 
     // Append the recipe element to the recipe list
+    recipeElement.appendChild(imgElement);
+    recipeElement.appendChild(nameElement);
     recipeListElement.appendChild(recipeElement);
   });
 }
