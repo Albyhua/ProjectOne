@@ -1,11 +1,19 @@
 
 
+
+
 const searchInput = document.getElementById('search-input');
 const searchForm = document.getElementById('search-form');
 const recipeListElement = document.getElementById('recipe-list');
 const recipeDetailsElement = document.getElementById('recipe-details');
 const autocompleteListElement = document.getElementById('autocomplete-list');
 const historyBlock = document.getElementById('history-block');
+const startBtn = document.getElementById('startBtn');
+const title = document.getElementById('titleScreen');
+const header = document.getElementById('header');
+const mainPage = document.getElementById('mainPage');
+const recipePage = document.getElementById('recipe');
+const backBtn = document.getElementById('backBtn')
 const apiKey = 'a0d37f1dc6853215adb58e3a7e45f9d5'; 
 const appId = '3d90a8ed'; 
 
@@ -71,14 +79,14 @@ function displayRecipes(recipes) {
   // Iterate through the recipes and create a recipe element for each
   recipes.forEach(recipe => {
     const recipeElement = document.createElement('div');
-    const nameElement = document.createElement("h3")
-    const imgElement = document.createElement("img")
+    const nameElement = document.createElement("h3");
+    const imgElement = document.createElement("img");
 
     
     imgElement.setAttribute("src", recipe.recipe.image);
     imgElement.setAttribute("alt", "food image");
-    imgElement.classList.add('image')
-    console.log(recipe)
+    imgElement.classList.add('image');
+    console.log(recipe);
     recipeElement.classList.add('recipe','searchBlock','boxes','box','is-justify-content-space-around','m-2');
     nameElement.textContent = recipe.recipe.label;
 
@@ -97,19 +105,19 @@ function displayRecipes(recipes) {
 function showRecipeDetails(recipe) {
   // Clear previous recipe details
   //recipeDetailsElement.innerHTML = '';
+  mainPage.classList.add('is-hidden');
+  recipePage.classList.remove('is-hidden');
+  backBtn.classList.remove('is-hidden');
   console.log(recipe)
   // Create elements for the recipe details
-  const recipeTitle = document.createElement('h2');
+  const recipeTitle = document.getElementById('recipeTitle');
   recipeTitle.textContent = recipe.label;
-
-  const imgEl = document.createElement("img")
+  recipeTitle.classList.add('HHH')
+  const imgEl = document.getElementById("recimage")
   // imgEl.setAttribute("src",recipe.images.REGULAR.url)
   imgEl.setAttribute("src",recipe.image)
 
-  const ingredientsTitle = document.createElement('h3');
-  ingredientsTitle.textContent = 'Ingredients';
-
-  const ingredientsList = document.createElement('ul');
+  const ingredientsList = document.getElementById('ingredents');
   recipe.ingredientLines.forEach(ingredient => {
     const ingredientItem = document.createElement('li');
     ingredientItem.textContent = ingredient;
@@ -127,13 +135,30 @@ function showRecipeDetails(recipe) {
   });
   console.log(recipeDetailsElement)
   // Append the elements to the recipe details
-  recipeDetailsElement.innerHTML = ""
-  recipeDetailsElement.appendChild(recipeTitle);
-  recipeDetailsElement.appendChild(imgEl)
-  recipeDetailsElement.appendChild(ingredientsTitle);
-  recipeDetailsElement.appendChild(stepsList);
+  // recipeDetailsElement.innerHTML = ""
+  // recipeDetailsElement.appendChild(recipeTitle);
+  // recipeDetailsElement.appendChild(imgEl)
+  // recipeDetailsElement.appendChild(ingredientsTitle);
+  // recipeDetailsElement.appendChild(stepsList);
   // recipeDetailsElement.appendChild(stepsTitle);
   // recipeDetailsElement.appendChild(ingredientsList);
+  showNutritionDetails(recipe);
+}
+
+function showNutritionDetails(recipe) {
+  // Create elements for the nutrition facts
+  const nutritionBox = document.getElementsByClassName('nutrition');
+  const nutritionList = document.getElementById('nutritionList');
+
+  const diet = recipe.totalNutrients;
+  for (let nutrient in diet) {
+    const nutrientItem = document.createElement('li');
+    nutrientItem.textContent = `${diet[nutrient].label}: ${Math.round(diet[nutrient].quantity)} ${diet[nutrient].unit}`;
+    nutritionList.appendChild(nutrientItem);
+  }
+
+  // Append the elements to the recipe details
+  nutritionBox.appendChild(nutritionList);
 }
 
 function autocompleteSearch(searchTerm) {
@@ -182,3 +207,22 @@ function saveSearchToHistory(searchTerm) {
     historyBlock.appendChild(searchItem);
   });
 }
+
+
+startBtn.addEventListener('click',function(event){
+  event.preventDefault();
+  title.classList.add('is-hidden');
+  mainPage.classList.remove('is-hidden');
+  header.classList.remove('is-hidden');
+  console.log('hi');
+});
+
+backBtn.addEventListener('click',function(event){
+  event.preventDefault();
+  recipePage.classList.add('is-hidden');
+  mainPage.classList.remove('is-hidden');
+  backBtn.classList.add('is-hidden');
+})
+
+
+

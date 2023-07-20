@@ -5,7 +5,11 @@ body {
 
     height: 100%;
     min-height: 100vh;
+    padding-bottom: 5vh;
+}
 
+.box{
+    margin-bottom: 0vh;
 }
 
 h1{
@@ -39,6 +43,10 @@ h1{
     display: flex;
     justify-content: space-evenly;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.HHH{
+    font-size: x-large;
 }
 
 .startBtn{
@@ -85,15 +93,10 @@ h1{
     min-height: 200px;
 }
 
-.steps {
-    width: 100%;
-    min-height: 200px;
-
-}
 
 .nutrition {
     width: 75%;
-    margin-left: 5vh;
+    margin-left: 0;
     min-height: 200px;
 }
 
@@ -129,3 +132,6 @@ footer {
 .btn:hover{
     background-color: darkgrey;
 }
+
+
+
