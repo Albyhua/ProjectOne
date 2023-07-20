@@ -61,7 +61,6 @@ function searchRecipes(searchTerm) {
       .then(data => {
         console.log(data)
           displayRecipes(data.hits);
-          saveSearchToHistory(searchTerm);
       })
       .catch(error => {
           console.log('An error occurred:', error);
@@ -196,9 +195,11 @@ function clearAutocompleteList() {
 function saveSearchToHistory(searchTerm) {
   searchHistory.push(searchTerm);
   // Update the historyBlock element with the search history
+  localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+
   historyBlock.innerHTML = '';
   searchHistory.forEach(search => {
-    const searchItem = document.createElement('div');
+    const searchItem = document.createElement('li');
     searchItem.classList.add('searchItem');
     searchItem.textContent = search;
     historyBlock.appendChild(searchItem);
