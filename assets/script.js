@@ -1,3 +1,5 @@
+
+
 const searchInput = document.getElementById('search-input');
 const searchForm = document.getElementById('search-form');
 const recipeListElement = document.getElementById('recipe-list');
@@ -170,4 +172,3 @@ function saveSearchToHistory(searchTerm) {
     historyBlock.appendChild(searchItem);
   });
 }
-

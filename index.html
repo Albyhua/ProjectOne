@@ -11,15 +11,17 @@
 
 </head>
 
+
+
 <body>
-    <!-- header is-hidden -->
-    <header class="p  has-background-warning-dark form pb-2">
+    <!-- header is-hidden  -->
+    <header class="p has-background-warning-dark form pb-2">
         <div class="container is-size-3 has-text-light has-text-centered">
             <div>RECIPE FINDER </div>
         </div>
         <nav>
-            <form>
-                <input class="searchBar" placeholder="enter a recipe">
+            <form id="search-form">
+                <input id="search-input" class="searchBar" placeholder="enter a recipe">
                 <button class="searchBtn btn"> Search</button>
                 <button class="backBtn btn"> Back</button>
                 <!-- have autocomplete option available to user -->
@@ -39,21 +41,18 @@
         </div>
     </div>
     <!-- Homepage with example meals-->
-    <!-- search page with search results and most recent searches is-hidden -->
+    <!-- search page with is-hidden search results and most recent searches -->
 
-    <div class="results columns is-fullhd mt-4 ml-4 mr-4 ">
+    <div  class="mainPage columns  is-fullhd mt-4 ml-4 mr-4 ">
         <section class=" column is-8  box has-background-warning-dark">
 
             <h2 class="has-text-light mb-4">Try Something New</h2>
-            <div class=" is-flex is-flex-wrap-wrap">
+            <div  id="recipe-list" class=" is-flex is-flex-wrap-wrap">
                 <div class="searchBlock boxes box is-justify-content-space-around m-2  ">
                     <img class="image" src="./assets/food placeholder.jpg" alt="food image">
                     <h3>Food Recipie</h3>
                 </div>
-                <div class="searchBlock boxes box is-justify-content-space-around m-2  ">
-                    <img class="image" src="./assets/food placeholder.jpg" alt="food image">
-                    <h3>Food Recipie</h3>
-                </div>
+                
                 <div class="searchBlock boxes box is-justify-content-space-around m-2  ">
                     <img class="image" src="./assets/food placeholder.jpg" alt="food image">
                     <h3>Food Recipie</h3>
@@ -62,15 +61,16 @@
         </section>
         <section class=" history column is-offset-1 box has-background-warning-dark">
             <h2 class="has-text-light"> Recent Searches</h2>
-            <div class="historyBlock boxes box">
+            <div  id="recipe-list" class="historyBlock boxes box">
                 <img class="image" src="./assets/food placeholder.jpg" alt="food image">
                 <h3>Food Recipie</h3>
             </div>
         </section>
     </div>
-    <!-- page for when you click on a recipie -->
+    <!-- page for whenyou click on a recipie -->
+    <div id="recipe-details"></div>
     <div
-        class="recipe is-hidden is-flex is-flex-wrap-wrap is-justify-content-center box has-background-warning-dark  m-5 mt-8 ">
+        class="recipe is-hidden  is-flex is-flex-wrap-wrap is-justify-content-center box has-background-warning-dark  m-5 mt-8 ">
         <section class="mainImage box p-2 ">
             <img class="image" src="./assets/food placeholder.jpg" alt="food image">
         </section>
@@ -98,9 +98,17 @@
         </section>
     </div>
 
+  <section>
+    <div class="foodEx" id="recipe-list"></div>
+    <div class="foodimg"></div>
+  </section>
+
+  <section class="history"></section>
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="./assets/script.js"></script>
 
 </html>
+
