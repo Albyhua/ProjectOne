@@ -21,7 +21,10 @@
 
 ## Installation
 
-N/A
+(https://albyhua.github.io/ProjectOne/)
+
+![image](https://github.com/Albyhua/ProjectOne/assets/134178485/484a6ee0-2212-41d8-88a5-0ca3e98f7c10)
+
 
 ## Usage
 
