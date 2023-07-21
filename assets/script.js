@@ -71,7 +71,21 @@ function searchRecipes(searchTerm) {
     console.log(data);
     if (data.hits.length > 0) {
       displayRecipes(data.hits);
-      saveSearchToHistory(searchTerm);
+    
+      // Check for duplicates in the searchHistory array
+      let isDuplicate = false;
+      for (let i = 0; i < searchHistory.length; i++) {
+        if (searchTerm === searchHistory[i]) {
+          isDuplicate = true;
+          break;
+        }
+      }
+    
+      // If it's not a duplicate, save the search term to the searchHistory
+      if (!isDuplicate) {
+        saveSearchToHistory(searchTerm);
+      }
+    
     } else {
       searchInput.value = '';
     }
